@@ -45,12 +45,26 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          request_pty: true
           script: |
             cd /home/azureuser/Python-Flask
             git pull origin main
-            source venv/bin/activate
+            source /home/azureuser/Python-Flask/venv/bin/activate
             pip install -r requirements.txt
-            pkill -f "python3 app.py" || true
-            setsid python3 app.py > app.log 2>&1 &
+            sudo tee /etc/systemd/system/flaskapp.service > /dev/null <<EOF
+            [Unit]
+            Description=Flask App
+            After=network.target
+
+            [Service]
+            User=azureuser
+            WorkingDirectory=/home/azureuser/Python-Flask
+            ExecStart=/home/azureuser/Python-Flask/venv/bin/python3 app.py
+            Restart=always
+
+            [Install]
+            WantedBy=multi-user.target
+            EOF
+            sudo systemctl daemon-reload
+            sudo systemctl restart flaskapp
+            sudo systemctl enable flaskapp
             echo "Deploy done!"
