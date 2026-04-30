@@ -45,16 +45,12 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          request_pty: true
           script: |
-            cd /home/azureuser
-            git clone https://github.com/renzkie8/Python-Flask.git || true
-            cd Python-Flask
+            cd /home/azureuser/Python-Flask
             git pull origin main
-            sudo apt-get install -y python3-venv
-            python3 -m venv venv
             source venv/bin/activate
             pip install -r requirements.txt
             pkill -f "python3 app.py" || true
-            nohup python3 app.py > app.log 2>&1 &
-            disown
+            setsid python3 app.py > app.log 2>&1 &
             echo "Deploy done!"
