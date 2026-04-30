@@ -50,7 +50,10 @@ jobs:
             git clone https://github.com/renzkie8/Python-Flask.git || true
             cd Python-Flask
             git pull origin main
-            sudo apt-get install -y python3-pip
-            pip3 install -r requirements.txt
+            sudo apt-get update
+            sudo apt-get install -y python3-venv
+            python3 -m venv venv
+            source venv/bin/activate
+            pip install -r requirements.txt
             pkill -f "python3 app.py" || true
             nohup python3 app.py &
