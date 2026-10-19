@@ -33,3 +33,7 @@ No new blanket license is applied to third-party assets, datasets, course templa
 ## Topics
 
 python, flask, web-development, pytest, docker
+
+## Application preservation
+
+Application source and dependency files match the pre-portfolio GitHub version. The introductory CCCS exercise retains a personal-ID placeholder; application logic is unchanged by that privacy substitution. Portfolio documentation, topics and ignore rules are separate additions.

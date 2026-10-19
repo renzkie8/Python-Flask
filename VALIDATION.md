@@ -9,4 +9,12 @@
 
 ## Scope
 
-Source parsing is not execution or a complete correctness test. Notebook code cells can contain Jupyter magics and were not executed. No model training, external API calls, database initialization, GUI launch or website deployment was performed for this audit. Java compilation was not run because a JDK was not available in this environment. Third-party licensing and historical benchmark claims were not independently verified.
+Source parsing is not execution or a complete correctness test. Notebook code cells can contain Jupyter magics and were not executed. The initial portfolio audit did not execute applications. Follow-up local smoke checks are described below. Model training, live external API calls and website deployment were not performed. Java compilation was not run because a JDK was not available in this environment. Third-party licensing and historical benchmark claims were not independently verified.
+
+## Follow-up restoration checks
+
+Application and dependency files were compared with the pre-portfolio GitHub commit. The only retained source difference is the student-ID privacy placeholder in the introductory CCCS exercise.
+
+- flask: passed. 1 passed in 0.18s
+
+These checks used isolated copies and disposable databases. Full GUI workflows, live weather and Azure SQL operations remain unverified.
